@@ -2,8 +2,7 @@ import logo from "./logo.svg";
 import React from "react";
 import axios from "axios";
 import "./App.css";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
 // import weatherApp from './components/weatherApp';
 
 import { useState } from "react";
