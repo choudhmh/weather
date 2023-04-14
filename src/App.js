@@ -1,74 +1,108 @@
-import logo from "./logo.svg";
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 
-// import weatherApp from './components/weatherApp';
-
 import { useState } from "react";
 
-function App() {
-  const [data, setData] = useState({});
-  const [location, setLocation] = useState('')
+function App({ searchCities }) {
+  const [city, setCity] = useState(null);
+  const [weatherData, setWeatherData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=08acd577f8ab8cabf637f7cd3736a629`
+  const [selected, setSelected] = useState("");
 
-  const searchLocation = (event) =>{
-    if(event.key ==='Enter'){
-      axios.get(url).then((response) =>{
-      setData(response.data)
-      console.log(response.data)
-      console.log(data.weather)
-    })
-    setLocation('')
+  const getWeatherData = (selectedCity) => {
+    if (selectedCity) {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&units=metric&appid=08acd577f8ab8cabf637f7cd3736a629`;
+      axios.get(url).then((response) => {
+        setWeatherData(response.data);
+        console.log(response.data);
+        setIsLoading(false);
+      });
     }
-    
+  };
+
+  useEffect(() => {}, [searchCities]);
+
+  const handleChange = (event) => {
+    console.log(event.target.value);
+    setCity(event.target.value);
+
+    setValue(event.target.value);
+  };
+  useEffect(() => {
+    if (city) {
+      setIsLoading(true);
+      getWeatherData(city);
+    }
+  }, [city]);
+
+  const handleSubmit = (event) => {};
+
+  const changeSelectOptionHandler = (event) => {
+    setSelected(event.target.value);
+  };
+
+  const UK = ["Choose City", "London", "Manchester", "Birmingham", "Glasgow"];
+  const France = ["Choose City", "Paris", "Calais", "Lyon", "Nice"];
+  const Spain = ["Choose City", "Barcelona", "Madrid", "Córdoba", "Seville "];
+
+  /** Type variable to store different array for different dropdown */
+  let type = null;
+
+  /** This will be used to create set of options that user will see */
+  let options = null;
+
+  if (selected === "UK") {
+    type = UK;
+  } else if (selected === "France") {
+    type = France;
+  } else if (selected === "Spain") {
+    type = Spain;
+  }
+
+  if (type) {
+    options = type.map((el) => <option key={el}>{el}</option>);
+  }
+
+  const getInitialState = () => {
+    const value = "No City";
+    return value;
+  };
+
+  const [value, setValue] = useState(getInitialState);
+
+  if (isLoading) {
+    return <h2>Still Loading be patient</h2>;
   }
 
   return (
-    <div className="app">
-      <div className="search">
-        <input 
-        value={location}
-        onChange={event => setLocation(event.target.value)}
-        onKeyPress={searchLocation}
-        placeholder="Enter Location"
-        type="text"/>
-
-      </div>
-      <div className="container">
-        <div className="top">
-          <div className="location">
-            <p> {data.name} </p>
-          </div>
-          <div className="temp">
-            {data.main ? <h1>{Math.round(data.main.temp)} Celsius</h1> : null}
-          </div>
-          <div className="description">
-            {data.weather ? <p>{data.weather[0].main}</p> : null}
-          </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <div>
+          <ul>
+            <p>Europe</p>
+            <select onChange={changeSelectOptionHandler}>
+              <option>Choose Country</option>
+              <option>UK</option>
+              <option>France</option>
+              <option>Spain</option>
+            </select>
+            <p>
+              <select name="city" value={value} onChange={handleChange}>
+                {
+                  /** This is where we have used our options variable */
+                  options
+                }
+              </select>
+            </p>
+            <h3 style={{ color: "red" }}>You have chosen:{` ${value}`}</h3>
+            <h3>Humidity: {weatherData?.main.humidity}</h3>
+            <h3>Temp: {weatherData?.main.temp}</h3>
+          </ul>
         </div>
-      
-      {data.name !=undefined &&
-       <div className="bottom">
-          <div className="feels">
-          {data.weather ? <p>{Math.round(data.main.feels_like)}</p> : null}
-
-            <p> Feels like</p>
-          </div>
-          <div className="humdity">
-          {data.weather ? <p>{data.main.humidity}</p> : null}
-            <p>Humidity</p>
-          </div>
-          <div className="wind">
-          {data.weather ? <p>{data.wind.speed}</p> : null}
-            <p> Wind Speed</p>
-          </div>
-        </div>
-      }
-       
       </div>
-    </div>
+    </form>
   );
 }
 
