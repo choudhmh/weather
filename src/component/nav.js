@@ -15,9 +15,9 @@ function Nav() {
     return(
         <div className="App">
       <nav>
-     <li>
-      <Link to="/displayDifferentLocation"> DisplayDifferentLocation </Link>
-       </li>
+        Hello
+    
+
       </nav>
     </div>
     )

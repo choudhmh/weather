@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./design.css";
 
-
-import { useState } from "react";
 
 function DisplayDifferentLocation({ searchCities }) {
   const [city, setCity] = useState(null);
@@ -27,9 +26,15 @@ function DisplayDifferentLocation({ searchCities }) {
   const handleChange = (event) => {
     console.log(event.target.value);
     setCity(event.target.value);
-
     setValue(event.target.value);
   };
+
+  const handleChange1 = (event1) => {
+    console.log(event1.target.value);
+    setCity(event1.target.value);
+    setValue(event1.target.value);
+  };
+
   useEffect(() => {
     if (city) {
       setIsLoading(true);
@@ -39,13 +44,23 @@ function DisplayDifferentLocation({ searchCities }) {
 
   const handleSubmit = (event) => {};
 
+
   const changeSelectOptionHandler = (event) => {
     setSelected(event.target.value);
   };
 
+  const changeSelectOptionHandler1 = (event1) => {
+    setSelected(event1.target.value);
+  };
+//Europe
   const UK = ["Choose City", "London", "Manchester", "Birmingham", "Glasgow"];
   const France = ["Choose City", "Paris", "Calais", "Lyon", "Nice"];
   const Spain = ["Choose City", "Barcelona", "Madrid", "Córdoba", "Seville "];
+
+  //Asia
+  const China = ["Choose City", "Beijing", "Shanghai", "Hong Kong", "Macau"];
+  const India = ["Choose City", "Delhi", "Chennai", "Madras", "Luknow"];
+  const Kazakhstan = ["Choose City", "Astana", "Almaty", "Shymkent", "Atau"];
 
   /** Type variable to store different array for different dropdown */
   let type = null;
@@ -59,6 +74,12 @@ function DisplayDifferentLocation({ searchCities }) {
     type = France;
   } else if (selected === "Spain") {
     type = Spain;
+  }else if (selected === "Kazakhstan") {
+    type = Kazakhstan;
+  }else if (selected === "India") {
+    type = India;
+  }else if (selected === "China") {
+    type = China;
   }
 
   if (type) {
@@ -78,10 +99,10 @@ function DisplayDifferentLocation({ searchCities }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <div>
+      <div className="page">
+        <div className="europe">
           <ul>
-            <p>Europe</p>
+            <p1 style={{fontSize:32}}>Europe</p1>
             <select onChange={changeSelectOptionHandler}>
               <option>Choose Country</option>
               <option>UK</option>
@@ -96,11 +117,41 @@ function DisplayDifferentLocation({ searchCities }) {
                 }
               </select>
             </p>
-            <h3 style={{ color: "red" }}>You have chosen:{` ${value}`}</h3>
-            <h3>Humidity: {weatherData?.main.humidity}</h3>
-            <h3>Temp: {weatherData?.main.temp}</h3>
+           <p className="city"> City:{` ${value}`}</p>
+           <br></br>
+            <p>Humidity: {weatherData?.main.humidity}</p>
+            <p>Temp: {weatherData?.main.temp}</p>
+            <p>Feels Like: {weatherData?.main.feels_like}</p>
+            <p>Wind: {weatherData?.wind.speed}</p>
           </ul>
         </div>
+
+        <div className="asia">
+          <ul>
+            <p style={{fontSize:32}}>Asia</p>
+            <select onChange={changeSelectOptionHandler1}>
+              <option>Choose Country</option>
+              <option>China</option>
+              <option>India</option>
+              <option>Kazakhstan</option>
+            </select>
+            <p>
+              <select name="city2" value={value} onChange={handleChange1}>
+                {
+                  /** This is where we have used our options variable */
+                  options
+                }
+              </select>
+            </p>
+           <p className="city2"> City:{` ${value}`}</p>
+           <br></br>
+            <p>Humidity: {weatherData?.main.humidity}</p>
+            <p>Temp: {weatherData?.main.temp}</p>
+            <p>Feels Like: {weatherData?.main.feels_like}</p>
+            <p>Wind: {weatherData?.wind.speed}</p>
+          </ul>
+        </div>
+
       </div>
     </form>
   );
