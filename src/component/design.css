@@ -1,15 +1,20 @@
- * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
+
+html, body {
+  height:100%;
+} 
   body {
     font-family: 'Outfit', 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: url('../assets/sunset.jpg') no-repeat center center/cover;
+  
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    
   }
  
   p {
@@ -58,16 +63,29 @@
     position: fixed; left:400px; top:300px;
     padding: 3rem;
     border-radius: 12px;
-    background-color: rgba(4, 0, 0, 0.2);
+    background-color: rgba(255,255,255, 0.2);
   }
 
-  .page {
-    content: '';
-    background: url('../assets/sunset.jpg') no-repeat center center/cover;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;
+  .africa {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    width: 20%;
+    margin: 1rem auto;
+    position: fixed; left:720px; top:300px;
+    padding: 3rem;
+    border-radius: 12px;
+    background-color: rgba(255,255,255, 0.2);
+  }
+
+  .america {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    width: 20%;
+    margin: 1rem auto;
+    position: fixed; left:1040px; top:300px;
+    padding: 3rem;
+    border-radius: 12px;
+    background-color: rgba(255,255,255, 0.2);
   }

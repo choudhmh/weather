@@ -1,8 +1,5 @@
-
 import React from "react";
 import axios from "axios";
-
-
 
 import { useState } from "react";
 
@@ -18,7 +15,7 @@ function SearchCities(){
       axios.get(url).then((response) =>{
       setData(response.data)
       console.log(response.data)
-      console.log(data.weather)
+      // console.log(data.weather)
     })
     setLocation('')
     }

@@ -1,9 +1,10 @@
 import "./App.css";
 import DisplayDifferentLocation from "./component/displayDifferentLocation";
 import SearchCities from "./component/SearchCities";
-
-
 import { Route, Routes, NavLink , BrowserRouter, } from "react-router-dom";
+import Test from "./component/test";
+import Dropdown from "./component/DropDown";
+import WeekForecast from "./component/weekForecast";
 
 function App() {
  
@@ -15,7 +16,8 @@ function App() {
             display: "flex",
             background: 'black',
             padding: '5px 0 5px 5px',
-            fontSize: '20px'
+            fontSize: '20px',
+            justifyContent: "center"
         }}>
 
             <div style={{ margin: '10px' }}>
@@ -38,16 +40,25 @@ function App() {
                     Specific City
                 </NavLink>
             </div>
-           
+            <div style={{ margin: '10px' }}>
+                <NavLink to="/weekForecast" style={({ isActive }) => ({ 
+                    color: isActive ? 'greenyellow' : 'white' })}>
+                    Week Forecast
+                </NavLink>
+            </div>
+            
         </div>
+        
         <Routes>
            
             <Route exact path="/displayDifferentLocation" element={<DisplayDifferentLocation />} />
             <Route exact path="/SearchCities" element={<SearchCities />} />
+            <Route exact path="/weekForecast" element={<WeekForecast />} />
+           
           
         </Routes>
     </BrowserRouter>
-    <p>Welcome to my page</p>
+   
 </>
 
   );
